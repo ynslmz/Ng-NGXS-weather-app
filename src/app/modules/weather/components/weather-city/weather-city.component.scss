@@ -1,0 +1,19 @@
+.weather-icon {
+  width: 5rem;
+}
+
+.card {
+  min-width: 230px;
+}
+
+.celcius::after {
+  content: "\2103";
+}
+
+.kelvin::after {
+  content: "\212A";
+}
+
+.fahrenheit::after {
+  content: "\2109";
+}
