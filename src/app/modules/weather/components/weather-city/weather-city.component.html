@@ -7,9 +7,7 @@
       <img src="{{'http://openweathermap.org/img/wn/'+cityWeatherData.weather[0].icon +'@2x.png'}}"
         [alt]="cityWeatherData.name" class="weather-icon">
     </div>
-    <p class="celcius">{{cityWeatherData.main.temp}}</p>
-    <pre>
-    {{ cityWeatherData | json}}
-   </pre>
+    <p class="text-center">Temp : {{cityWeatherData.main.temp}}</p>
+    <p class="text-center">Wind : {{cityWeatherData.wind.speed}}</p>
   </div>
 </div>

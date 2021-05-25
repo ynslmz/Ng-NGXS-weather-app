@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { CitiesWeatherList } from 'src/app/shared/interfaces/weather.model';
-import { WeatherService } from '../../services/weather.service';
+import { WeatherService } from '../../../../shared/services/weather.service';
 
 @Component({
   selector: 'bb-weather-list',
@@ -18,9 +19,12 @@ export class WeatherListComponent implements OnInit {
     take: 5
   }
 
-  constructor(private weatherService: WeatherService) {
+
+
+  constructor(private weatherService: WeatherService, private store: Store) {
+    let unit = this.store.selectSnapshot(state => state.AppState.unit);
     this.$result = this.weatherService
-      .getCitiesWeatherData(this.coord.lat, this.coord.lon, this.coord.take, this.coord.unit)
+      .getCitiesWeatherData(this.coord.lat, this.coord.lon, this.coord.take, unit)
   }
 
   ngOnInit(): void {
