@@ -1,4 +1,4 @@
-<div class="row" *ngIf="$result | async as result">
+<div class="row" *ngIf="result$ | async as result">
   <div class="col" *ngFor="let city of result.list">
     <bb-weather-city [cityWeatherData]="city">
     </bb-weather-city>
