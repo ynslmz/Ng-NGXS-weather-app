@@ -1,21 +1,22 @@
-import { ThrowStmt } from '@angular/compiler';
 import { Injectable } from '@angular/core';
-import { Action, ActionType, getActionTypeFromInstance, Selector, State, StateContext } from '@ngxs/store';
+import { Action, ActionType, Selector, State, StateContext } from '@ngxs/store';
 import { CitiesWeatherList } from '../interfaces/weather.model';
 import { WeatherService } from '../services/weather.service';
-import { GetCitiesWeatherData, RecordLastWeatherAction, UnitChanged } from './app.actions';
+import { GetCitiesWeatherData, GetDetailOfCity, RecordLastWeatherAction, UnitChanged } from './app.actions';
 
 
 export class AppStateModel {
   unit!: string;
   citiesWeatherData!: CitiesWeatherList | null;
-  lastAction!: ActionType | null
+  lastAction!: ActionType | null;
+  detailOfCity: any;
 }
 
 export const defaultAppState: AppStateModel = {
   unit: 'standard',
   citiesWeatherData: null,
-  lastAction: null
+  lastAction: null,
+  detailOfCity: null
 }
 
 @State<AppStateModel>({
@@ -30,6 +31,8 @@ export class AppState {
   @Selector() static selectUnit(state: AppStateModel): string { return state.unit; }
 
   @Selector() static selectCitiesWeatherData(state: AppStateModel): CitiesWeatherList { return state.citiesWeatherData!; }
+
+  @Selector() static selectDetailOfCity(state: AppStateModel) { return state.detailOfCity; }
 
   // to change units globally
   @Action(UnitChanged)
@@ -55,4 +58,11 @@ export class AppState {
     ctx.patchState({ lastAction: action.actionType })
   }
 
+  @Action(GetDetailOfCity)
+  getDetailOfCity(ctx: StateContext<AppStateModel>, action: GetDetailOfCity) {
+    let unit = ctx.getState().unit;
+    this.weatherService.getDetailOfCity(action.lat, action.lon, unit).subscribe(
+      res => ctx.patchState({ detailOfCity: res })
+    )
+  }
 }

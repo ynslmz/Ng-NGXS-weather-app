@@ -15,8 +15,9 @@ import { AppState } from 'src/app/shared/store/app.state';
 export class WeatherListComponent implements OnInit, OnDestroy {
 
   // $result!: Observable<CitiesWeatherList>;
-  @Select(AppState.selectCitiesWeatherData) result$!: Observable<CitiesWeatherList>;
+  @Select(AppState.selectCitiesWeatherData) cities$!: Observable<CitiesWeatherList>;
   sub: Subscription;
+  @Select(AppState.selectDetailOfCity) city$!: Observable<any>;
 
   // this can be defined anywhere, i defined for a quick start
   coord = {

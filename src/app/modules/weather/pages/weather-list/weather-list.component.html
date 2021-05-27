@@ -1,6 +1,14 @@
-<div class="row" *ngIf="result$ | async as result">
+<div class="row" *ngIf="cities$ | async as result">
   <div class="col" *ngFor="let city of result.list">
     <bb-weather-city [cityWeatherData]="city">
     </bb-weather-city>
   </div>
+
+
+  <pre *ngIf="city$ |async as cty">
+      detail of City
+      {{
+        cty|json
+      }}
+  </pre>
 </div>

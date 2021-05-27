@@ -12,7 +12,7 @@ export class GetCitiesWeatherData {
 
 export class GetDetailOfCity {
   static readonly type = '[Weather Module] Get Detail of a City'
-  constructor(public city: string) { }
+  constructor(public lat: number, public lon: number) { }
 }
 
 export class RecordLastWeatherAction {

@@ -4,6 +4,7 @@ import { WeatherListComponent } from './pages/weather-list/weather-list.componen
 import { WeatherRoutingModule } from './weather-routing.module';
 import { WeatherCityComponent } from './components/weather-city/weather-city.component';
 import { WeatherService } from '../../shared/services/weather.service';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 
@@ -14,7 +15,8 @@ import { WeatherService } from '../../shared/services/weather.service';
   ],
   imports: [
     CommonModule,
-    WeatherRoutingModule
+    WeatherRoutingModule,
+    SharedModule
   ],
   providers: [
     WeatherService

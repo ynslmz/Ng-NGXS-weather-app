@@ -9,7 +9,6 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class WeatherService {
-
   constructor(private httpClient: HttpClient) { }
 
   // to get cities weather data
@@ -18,4 +17,7 @@ export class WeatherService {
       .get<CitiesWeatherList>(`${environment.apiUrl.weather}/find?lat=${lat}&lon=${long}&cnt=${count}&appid=${environment.apiId}&units=${unit}`);
   }
 
+  getDetailOfCity(lat: number, long: number, unit: string): Observable<any> {
+    return this.httpClient.get(`${environment.apiUrl.weather}/onecall?lat=${lat}&lon=${long}&exclude=current,minutely,daily,alerts&appid=${environment.apiId}&units=${unit}`)
+  }
 }
