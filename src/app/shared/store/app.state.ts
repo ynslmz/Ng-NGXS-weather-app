@@ -6,23 +6,21 @@ import { WeatherService } from '../services/weather.service';
 import { GetCitiesWeatherInfo, GetDetailOfCity, RecordLastWeatherAction, UnitChanged } from './app.actions';
 
 
-export class AppStateModel {
-  unit!: string;
-  citiesWeatherInfo!: WeatherByCityName[];
-  lastAction!: ActionType | null;
-  detailOfCity!: WeatherDetailOfCity | null;
+export interface AppStateModel {
+  unit: string;
+  citiesWeatherInfo: WeatherByCityName[];
+  lastAction: ActionType;
+  detailOfCity: WeatherDetailOfCity;
 }
 
-export const defaultAppState: AppStateModel = {
+export const defaultAppState: Partial<AppStateModel> = {
   unit: 'standard',
-  citiesWeatherInfo: [],
-  lastAction: null,
-  detailOfCity: null
+  citiesWeatherInfo: []
 }
 
 @State<AppStateModel>({
   name: "AppState",
-  defaults: defaultAppState
+  defaults: <AppStateModel>defaultAppState
 })
 @Injectable({ providedIn: 'root' })
 export class AppState {
@@ -33,7 +31,7 @@ export class AppState {
 
   @Selector() static selectCitiesWeatherInfo(state: AppStateModel): WeatherByCityName[] { return state.citiesWeatherInfo; }
 
-  @Selector() static selectDetailOfCity(state: AppStateModel) { return state.detailOfCity!; }
+  @Selector() static selectDetailOfCity(state: AppStateModel): WeatherDetailOfCity { return state.detailOfCity!; }
 
   // to change units globally
   @Action(UnitChanged)

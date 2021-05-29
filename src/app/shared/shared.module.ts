@@ -1,13 +1,20 @@
 import { NgModule } from '@angular/core';
 import { UnixDateTimePipe } from './pipes/unix-date-time/unix-date-time-pipe.pipe';
 import { TakePipe } from './pipes/take/take.pipe';
+import { ModalComponent } from './components/modal/modal.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
-  imports: [],
-  exports: [UnixDateTimePipe, TakePipe],
+  imports: [CommonModule],
+  exports: [
+    UnixDateTimePipe,
+    TakePipe,
+    ModalComponent
+  ],
   declarations: [
     UnixDateTimePipe,
-    TakePipe
+    TakePipe,
+    ModalComponent
   ],
   providers: [],
 })

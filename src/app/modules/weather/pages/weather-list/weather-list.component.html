@@ -4,7 +4,10 @@
     </bb-weather-city>
   </div>
 </div>
+
 <ng-container *ngIf="city$ |async as cty">
-  <bb-weather-detail-of-city [detailedCity]="cty">
-  </bb-weather-detail-of-city>
+  <bb-modal *ngIf="showDetail" [title]="cty.name" (closeClicked)="closeClicked()">
+    <bb-weather-detail-of-city [detailedCity]="cty">
+    </bb-weather-detail-of-city>
+  </bb-modal>
 </ng-container>

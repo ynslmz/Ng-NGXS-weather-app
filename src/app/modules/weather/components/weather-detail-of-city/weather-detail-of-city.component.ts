@@ -12,7 +12,6 @@ import { AppState } from 'src/app/shared/store/app.state';
 export class WeatherDetailOfCityComponent implements OnInit {
 
   @Input() detailedCity!: WeatherDetailOfCity;
-
   @Select(AppState.selectUnit) unit$!: Observable<string>;
 
   constructor() {
