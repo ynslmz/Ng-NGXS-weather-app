@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { CityWeatherData, Coord } from 'src/app/shared/interfaces/weather.model';
+import { Coord, WeatherByCityName } from 'src/app/shared/interfaces/weather.model';
 import { GetDetailOfCity } from 'src/app/shared/store/app.actions';
 import { AppState } from 'src/app/shared/store/app.state';
 
@@ -11,7 +11,7 @@ import { AppState } from 'src/app/shared/store/app.state';
 })
 export class WeatherCityComponent implements OnInit {
 
-  @Input() cityWeatherData!: CityWeatherData;
+  @Input() cityWeatherData!: WeatherByCityName;
   unit: string;
   constructor(public store: Store) {
     this.unit = this.store.selectSnapshot(AppState.selectUnit)
@@ -20,7 +20,7 @@ export class WeatherCityComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onClick(coord: Coord) {
-    this.store.dispatch(new GetDetailOfCity(coord.lat, coord.lon));
+  onClick(coord: Coord, cityName: string) {
+    this.store.dispatch(new GetDetailOfCity(coord.lat, coord.lon, cityName));
   };
 }

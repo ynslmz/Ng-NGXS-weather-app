@@ -1,5 +1,5 @@
 <div class="row" *ngIf="cities$ | async as result">
-  <div class="col" *ngFor="let city of result.list">
+  <div class="col" *ngFor="let city of result">
     <bb-weather-city [cityWeatherData]="city">
     </bb-weather-city>
   </div>

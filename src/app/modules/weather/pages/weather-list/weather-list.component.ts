@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Actions, ofActionCompleted, Select, Store } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
-import { CitiesWeatherList, DetailOfCity } from 'src/app/shared/interfaces/weather.model';
-import { GetCitiesWeatherData, GetDetailOfCity, RecordLastWeatherAction } from 'src/app/shared/store/app.actions';
+import { WeatherDetailOfCity, WeatherByCityName } from 'src/app/shared/interfaces/weather.model';
+import { GetCitiesWeatherInfo, GetDetailOfCity, RecordLastWeatherAction } from 'src/app/shared/store/app.actions';
 import { AppState } from 'src/app/shared/store/app.state';
 
 @Component({
@@ -15,20 +15,14 @@ import { AppState } from 'src/app/shared/store/app.state';
 export class WeatherListComponent implements OnInit, OnDestroy {
 
   // $result!: Observable<CitiesWeatherList>;
-  @Select(AppState.selectCitiesWeatherData) cities$!: Observable<CitiesWeatherList>;
+  @Select(AppState.selectCitiesWeatherInfo) cities$!: Observable<WeatherByCityName[]>;
   sub: Subscription;
-  @Select(AppState.selectDetailOfCity) city$!: Observable<DetailOfCity>;
-
-  // this can be defined anywhere, i defined for a quick start
-  coord = {
-    lat: 52.374,
-    lon: 4.8897,
-    take: 5
-  }
+  @Select(AppState.selectDetailOfCity) city$!: Observable<WeatherDetailOfCity>;
+  cities = ['Amsterdam', 'Barcelona', 'Bursa', 'Istanbul', 'Fethiye'];
 
   constructor(private store: Store, private actions$: Actions) {
     // save last action to call when unit changed
-    this.sub = this.actions$.pipe(ofActionCompleted(GetCitiesWeatherData, GetDetailOfCity))
+    this.sub = this.actions$.pipe(ofActionCompleted(GetCitiesWeatherInfo, GetDetailOfCity))
       .subscribe((res) => {
         if (res.result.successful) {
           this.store.dispatch(new RecordLastWeatherAction(res.action))
@@ -36,7 +30,7 @@ export class WeatherListComponent implements OnInit, OnDestroy {
       });
 
     // request 5 cities weather data
-    this.store.dispatch(new GetCitiesWeatherData(this.coord.lat, this.coord.lon, this.coord.take));
+    this.store.dispatch(new GetCitiesWeatherInfo(this.cities));
   }
   ngOnDestroy(): void {
     if (!!this.sub) {

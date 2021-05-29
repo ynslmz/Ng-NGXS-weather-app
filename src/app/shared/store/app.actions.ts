@@ -5,14 +5,14 @@ export class UnitChanged {
   constructor(public unit: string) { }
 }
 
-export class GetCitiesWeatherData {
+export class GetCitiesWeatherInfo {
   static readonly type = '[Weather Module] Get Cities Weather Data'
-  constructor(public lat: number, public lon: number, public take: number = 5) { }
+  constructor(public cities: string[]) { }
 }
 
 export class GetDetailOfCity {
   static readonly type = '[Weather Module] Get Detail of a City'
-  constructor(public lat: number, public lon: number) { }
+  constructor(public lat: number, public lon: number, public cityName: string) { }
 }
 
 export class RecordLastWeatherAction {

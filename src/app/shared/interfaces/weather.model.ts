@@ -1,8 +1,15 @@
-
 export interface Coord {
-  lat: number;
   lon: number;
+  lat: number;
 }
+
+export interface Weather {
+  id: number;
+  main: string;
+  description: string;
+  icon: string;
+}
+
 export interface Main {
   temp: number;
   feels_like: number;
@@ -15,41 +22,35 @@ export interface Main {
 export interface Wind {
   speed: number;
   deg: number;
-}
-
-export interface Sys {
-  country: string;
+  gust: number;
 }
 
 export interface Clouds {
   all: number;
 }
-export interface Weather {
+
+export interface Sys {
+  type: number;
   id: number;
-  main: string;
-  description: string;
-  icon: string;
+  country: string;
+  sunrise: number;
+  sunset: number;
 }
 
-export interface CityWeatherData {
+export interface WeatherByCityName {
+  coord: Coord;
+  weather: Weather[];
+  base: string;
+  main: Main;
+  visibility: number;
+  wind: Wind;
+  clouds: Clouds;
+  dt: number;
+  sys: Sys;
+  timezone: number;
   id: number;
   name: string;
-  coord: Coord;
-  main: Main;
-  dt: number;
-  wind: Wind;
-  sys: Sys;
-  rain?: any;
-  snow?: any;
-  clouds: Clouds;
-  weather: Weather[];
-}
-
-export interface CitiesWeatherList {
-  message: string;
-  cod: string;
-  count: number;
-  list: CityWeatherData[];
+  cod: number;
 }
 
 export interface Hourly {
@@ -69,10 +70,11 @@ export interface Hourly {
   pop: number;
 }
 
-export interface DetailOfCity {
+export interface WeatherDetailOfCity {
   lat: number;
   lon: number;
   timezone: string;
   timezone_offset: number;
   hourly: Hourly[];
+  name: string;
 }

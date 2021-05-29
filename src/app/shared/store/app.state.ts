@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Action, ActionType, Selector, State, StateContext } from '@ngxs/store';
-import { CitiesWeatherList } from '../interfaces/weather.model';
+import { zip } from 'rxjs';
+import { WeatherByCityName, WeatherDetailOfCity } from '../interfaces/weather.model';
 import { WeatherService } from '../services/weather.service';
-import { GetCitiesWeatherData, GetDetailOfCity, RecordLastWeatherAction, UnitChanged } from './app.actions';
+import { GetCitiesWeatherInfo, GetDetailOfCity, RecordLastWeatherAction, UnitChanged } from './app.actions';
 
 
 export class AppStateModel {
   unit!: string;
-  citiesWeatherData!: CitiesWeatherList | null;
+  citiesWeatherInfo!: WeatherByCityName[];
   lastAction!: ActionType | null;
-  detailOfCity: any;
+  detailOfCity!: WeatherDetailOfCity | null;
 }
 
 export const defaultAppState: AppStateModel = {
   unit: 'standard',
-  citiesWeatherData: null,
+  citiesWeatherInfo: [],
   lastAction: null,
   detailOfCity: null
 }
@@ -30,9 +31,9 @@ export class AppState {
 
   @Selector() static selectUnit(state: AppStateModel): string { return state.unit; }
 
-  @Selector() static selectCitiesWeatherData(state: AppStateModel): CitiesWeatherList { return state.citiesWeatherData!; }
+  @Selector() static selectCitiesWeatherInfo(state: AppStateModel): WeatherByCityName[] { return state.citiesWeatherInfo; }
 
-  @Selector() static selectDetailOfCity(state: AppStateModel) { return state.detailOfCity; }
+  @Selector() static selectDetailOfCity(state: AppStateModel) { return state.detailOfCity!; }
 
   // to change units globally
   @Action(UnitChanged)
@@ -43,13 +44,11 @@ export class AppState {
   }
 
   // to fetch cities weather data
-  @Action(GetCitiesWeatherData)
-  getCitiesWeatherData(ctx: StateContext<AppStateModel>, action: GetCitiesWeatherData) {
+  @Action(GetCitiesWeatherInfo)
+  getCitiesWeatherInfo(ctx: StateContext<AppStateModel>, action: GetCitiesWeatherInfo) {
     let unit = ctx.getState().unit;
-    this.weatherService.getCitiesWeatherData(action.lat, action.lon, action.take, unit).subscribe(
-      (res: CitiesWeatherList) => {
-        ctx.patchState({ citiesWeatherData: res })
-      }
+    zip(...action.cities.map(city => this.weatherService.getWeatherByCityName(city, unit))).subscribe(
+      res => ctx.patchState({ citiesWeatherInfo: res })
     )
   }
 
@@ -61,8 +60,8 @@ export class AppState {
   @Action(GetDetailOfCity)
   getDetailOfCity(ctx: StateContext<AppStateModel>, action: GetDetailOfCity) {
     let unit = ctx.getState().unit;
-    this.weatherService.getDetailOfCity(action.lat, action.lon, unit).subscribe(
-      res => ctx.patchState({ detailOfCity: res })
+    this.weatherService.getWeatherDetailOfCity(action.lat, action.lon, unit).subscribe(
+      res => ctx.patchState({ detailOfCity: { ...res, name: action.cityName } })
     )
   }
 }

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Select, Store } from '@ngxs/store';
+import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { DetailOfCity } from 'src/app/shared/interfaces/weather.model';
+import { WeatherDetailOfCity } from 'src/app/shared/interfaces/weather.model';
 import { AppState } from 'src/app/shared/store/app.state';
 
 @Component({
@@ -11,7 +11,7 @@ import { AppState } from 'src/app/shared/store/app.state';
 })
 export class WeatherDetailOfCityComponent implements OnInit {
 
-  @Input() detailedCity!: DetailOfCity;
+  @Input() detailedCity!: WeatherDetailOfCity;
 
   @Select(AppState.selectUnit) unit$!: Observable<string>;
 
