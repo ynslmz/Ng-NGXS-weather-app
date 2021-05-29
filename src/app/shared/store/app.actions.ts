@@ -1,4 +1,3 @@
-import { ActionType } from "@ngxs/store";
 
 export class UnitChanged {
   static readonly type = '[UnitSelector] Unit Changed';
@@ -15,7 +14,12 @@ export class GetDetailOfCity {
   constructor(public lat: number, public lon: number, public cityName: string) { }
 }
 
-export class RecordLastWeatherAction {
-  static readonly type = '[Weather Module] Record Last Weather Action'
-  constructor(public actionType: ActionType) { }
+export class RecordRequest {
+  static readonly type = '[Http Interceptor] Record Request';
+  constructor(public request: string) { }
+}
+
+export class DeleteRequest {
+  static readonly type = '[Http Interceptor] Deletes Request';
+  constructor(public request: string) { }
 }

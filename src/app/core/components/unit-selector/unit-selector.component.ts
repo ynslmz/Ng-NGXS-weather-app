@@ -14,7 +14,7 @@ export class UnitSelectorComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  default = "standard";
+  default = "metric";
 
   unitList = [
     "standard",

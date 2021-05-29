@@ -1,21 +1,23 @@
 import { Injectable } from '@angular/core';
-import { Action, ActionType, Selector, State, StateContext } from '@ngxs/store';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { zip } from 'rxjs';
 import { WeatherByCityName, WeatherDetailOfCity } from '../interfaces/weather.model';
 import { WeatherService } from '../services/weather.service';
-import { GetCitiesWeatherInfo, GetDetailOfCity, RecordLastWeatherAction, UnitChanged } from './app.actions';
+import { DeleteRequest, GetCitiesWeatherInfo, GetDetailOfCity, RecordRequest, UnitChanged } from './app.actions';
 
 
 export interface AppStateModel {
   unit: string;
   citiesWeatherInfo: WeatherByCityName[];
-  lastAction: ActionType;
   detailOfCity: WeatherDetailOfCity;
+  httpRequests: string[]
 }
 
+
 export const defaultAppState: Partial<AppStateModel> = {
-  unit: 'standard',
-  citiesWeatherInfo: []
+  unit: 'metric',
+  citiesWeatherInfo: [],
+  httpRequests: []
 }
 
 @State<AppStateModel>({
@@ -33,12 +35,12 @@ export class AppState {
 
   @Selector() static selectDetailOfCity(state: AppStateModel): WeatherDetailOfCity { return state.detailOfCity!; }
 
+  @Selector() static selectIsLoading(state: AppStateModel): Boolean { return state.httpRequests.length > 0; }
+
   // to change units globally
   @Action(UnitChanged)
   unitChanged(ctx: StateContext<AppStateModel>, action: UnitChanged) {
     ctx.patchState({ unit: action.unit })
-    // call last action to fetch data with new unit!
-    ctx.dispatch(ctx.getState().lastAction);
   }
 
   // to fetch cities weather data
@@ -50,16 +52,26 @@ export class AppState {
     )
   }
 
-  @Action(RecordLastWeatherAction)
-  recordLastWeatherAction(ctx: StateContext<AppStateModel>, action: RecordLastWeatherAction) {
-    ctx.patchState({ lastAction: action.actionType })
-  }
-
   @Action(GetDetailOfCity)
   getDetailOfCity(ctx: StateContext<AppStateModel>, action: GetDetailOfCity) {
     let unit = ctx.getState().unit;
     this.weatherService.getWeatherDetailOfCity(action.lat, action.lon, unit).subscribe(
       res => ctx.patchState({ detailOfCity: { ...res, name: action.cityName } })
     )
+  }
+
+  @Action(RecordRequest)
+  recordRequest(ctx: StateContext<AppStateModel>, action: RecordRequest) {
+    ctx.patchState({ httpRequests: [...ctx.getState().httpRequests, action.request] })
+  }
+
+  @Action(DeleteRequest)
+  deleteRequest(ctx: StateContext<AppStateModel>, action: DeleteRequest) {
+    let reqs = [...ctx.getState().httpRequests]
+    const index = reqs.indexOf(action.request);
+    if (index >= 0) {
+      reqs.splice(index, 1);
+    }
+    ctx.patchState({ httpRequests: reqs });
   }
 }

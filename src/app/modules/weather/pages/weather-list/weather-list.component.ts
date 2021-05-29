@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { Actions, ofActionCompleted, Select, Store } from '@ngxs/store';
+import { Actions, Select, Store } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
 import { WeatherDetailOfCity, WeatherByCityName } from 'src/app/shared/interfaces/weather.model';
-import { GetCitiesWeatherInfo, GetDetailOfCity, RecordLastWeatherAction } from 'src/app/shared/store/app.actions';
+import { GetCitiesWeatherInfo } from 'src/app/shared/store/app.actions';
 import { AppState } from 'src/app/shared/store/app.state';
 import { filter, tap } from 'rxjs/operators';
 
@@ -24,22 +24,18 @@ export class WeatherListComponent implements OnInit, OnDestroy {
   showDetail = false;
 
   constructor(private store: Store, private actions$: Actions) {
-
-    // save last action to call when unit changed
-    this.subscriptions.push(
-      this.actions$.pipe(ofActionCompleted(GetCitiesWeatherInfo, GetDetailOfCity))
-        .subscribe((res) => {
-          if (res.result.successful) {
-            this.store.dispatch(new RecordLastWeatherAction(res.action))
-          }
-        }));
+    // request data when unit change!
+    this.subscriptions.push(this.store.select(AppState.selectUnit).subscribe(res => this.dispatchWethearRequest()));
 
     // filter null values and open modal when data receives
     this.city$ = this.store.select(AppState.selectDetailOfCity).pipe(
       filter((res) => !!res),
       tap((res) => this.showDetail = true)
     )
+    this.dispatchWethearRequest();
+  }
 
+  dispatchWethearRequest(): void {
     // request 5 cities weather data
     this.store.dispatch(new GetCitiesWeatherInfo(this.cities));
   }

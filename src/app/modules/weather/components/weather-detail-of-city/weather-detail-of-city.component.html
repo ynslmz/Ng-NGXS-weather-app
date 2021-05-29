@@ -1,5 +1,5 @@
 <div class="row" *ngIf="!!detailedCity">
-  <div class="col" style="min-width: 20%" *ngFor="let item of detailedCity.hourly | take:5">
+  <div class="col" style="min-width: 200px" *ngFor="let item of detailedCity.hourly | take:5">
     <bb-weather-icon [weather]="item.weather"></bb-weather-icon>
     <p class="text-center">
       {{ item.dt | unixDateTime }}
