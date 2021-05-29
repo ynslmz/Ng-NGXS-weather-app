@@ -3,7 +3,6 @@ export interface Coord {
   lat: number;
   lon: number;
 }
-
 export interface Main {
   temp: number;
   feels_like: number;
@@ -25,7 +24,6 @@ export interface Sys {
 export interface Clouds {
   all: number;
 }
-
 export interface Weather {
   id: number;
   main: string;
@@ -54,5 +52,27 @@ export interface CitiesWeatherList {
   list: CityWeatherData[];
 }
 
+export interface Hourly {
+  dt: number;
+  temp: number;
+  feels_like: number;
+  pressure: number;
+  humidity: number;
+  dew_point: number;
+  uvi: number;
+  clouds: number;
+  visibility: number;
+  wind_speed: number;
+  wind_deg: number;
+  wind_gust: number;
+  weather: Weather[];
+  pop: number;
+}
 
-
+export interface DetailOfCity {
+  lat: number;
+  lon: number;
+  timezone: string;
+  timezone_offset: number;
+  hourly: Hourly[];
+}

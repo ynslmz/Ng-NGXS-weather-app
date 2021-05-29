@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col" style="min-width: 20%" *ngFor="let item of detailedCity.hourly | take:5">
+    <bb-weather-icon [weather]="item.weather"></bb-weather-icon>
+    <p class="text-center">
+      {{ item.dt|unixDateTime}}
+    </p>
+    <ng-container *ngIf="unit$ |async as unit">
+      <p class="text-center">Temp : {{item.temp }} <i [class]="'temp ' + unit"></i>
+      </p>
+      <p class="text-center">Wind : {{item.wind_speed }} <i [class]="'wind '+ unit"></i></p>
+    </ng-container>
+  </div>
+</div>

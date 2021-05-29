@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Actions, ofActionCompleted, Select, Store } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
-import { CitiesWeatherList } from 'src/app/shared/interfaces/weather.model';
+import { CitiesWeatherList, DetailOfCity } from 'src/app/shared/interfaces/weather.model';
 import { GetCitiesWeatherData, GetDetailOfCity, RecordLastWeatherAction } from 'src/app/shared/store/app.actions';
 import { AppState } from 'src/app/shared/store/app.state';
 
@@ -17,7 +17,7 @@ export class WeatherListComponent implements OnInit, OnDestroy {
   // $result!: Observable<CitiesWeatherList>;
   @Select(AppState.selectCitiesWeatherData) cities$!: Observable<CitiesWeatherList>;
   sub: Subscription;
-  @Select(AppState.selectDetailOfCity) city$!: Observable<any>;
+  @Select(AppState.selectDetailOfCity) city$!: Observable<DetailOfCity>;
 
   // this can be defined anywhere, i defined for a quick start
   coord = {
