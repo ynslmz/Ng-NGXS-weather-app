@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import { LoadingComponent } from './core/components/loading/loading.component';
 import { NavbarComponent } from './core/components/navbar/navbar.component';
 import { UnitSelectorComponent } from './core/components/unit-selector/unit-selector.component';
-import { AppState } from './shared/store/app.state';
 
 
 describe('AppComponent', () => {
