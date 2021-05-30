@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { Actions, Select, Store } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
 import { WeatherDetailOfCity, WeatherByCityName } from 'src/app/shared/interfaces/weather.model';
 import { GetCitiesWeatherInfo } from 'src/app/shared/store/app.actions';
@@ -15,15 +15,13 @@ import { filter, tap } from 'rxjs/operators';
 })
 export class WeatherListComponent implements OnInit, OnDestroy {
 
-  // $result!: Observable<CitiesWeatherList>;
   @Select(AppState.selectCitiesWeatherInfo) cities$!: Observable<WeatherByCityName[]>;
   subscriptions: Subscription[] = [];
-
   cities = ['Amsterdam', 'Barcelona', 'Bursa', 'Istanbul', 'Fethiye'];
   city$!: Observable<WeatherDetailOfCity>;
   showDetail = false;
 
-  constructor(private store: Store, private actions$: Actions) {
+  constructor(private store: Store) {
     // request data when unit change!
     this.subscriptions.push(this.store.select(AppState.selectUnit).subscribe(res => this.dispatchWethearRequest()));
 
