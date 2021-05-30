@@ -1,6 +1,6 @@
 <div class="card mb-5" (click)="onClick(cityWeatherData.coord, cityWeatherData.name)">
   <div class="card-header text-center">
-    <span class="fs-6">{{ cityWeatherData.name }}</span>
+    <span id="cityName" class="fs-6">{{ cityWeatherData.name }}</span>
   </div>
   <div class="card-body d-flex flex-column">
     <bb-weather-icon [weather]="cityWeatherData.weather"></bb-weather-icon>
