@@ -10,3 +10,9 @@
   align-items: center;
   z-index: 50;
 }
+
+.modal-container {
+  max-width: 90%;
+  max-height: 90%;
+  overflow: auto;
+}
