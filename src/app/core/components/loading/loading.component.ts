@@ -10,12 +10,9 @@ import { AppState } from 'src/app/shared/store/app.state';
 })
 export class LoadingComponent implements OnInit {
 
-
   @Select(AppState.selectIsLoading) visibility$!: Observable<boolean>
 
-  constructor() {
-
-  }
+  constructor() { }
 
   ngOnInit(): void {
   }

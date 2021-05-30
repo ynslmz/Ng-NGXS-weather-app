@@ -1,25 +1,25 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+// import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WeatherIconComponent } from './weather-icon.component';
+// import { WeatherIconComponent } from './weather-icon.component';
 
-describe('WeatherIconComponent', () => {
-  let component: WeatherIconComponent;
-  let fixture: ComponentFixture<WeatherIconComponent>;
+// describe('WeatherIconComponent', () => {
+//   let component: WeatherIconComponent;
+//   let fixture: ComponentFixture<WeatherIconComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ WeatherIconComponent ]
-    })
-    .compileComponents();
-  });
+//   beforeEach(async () => {
+//     await TestBed.configureTestingModule({
+//       declarations: [ WeatherIconComponent ]
+//     })
+//     .compileComponents();
+//   });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(WeatherIconComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+//   beforeEach(() => {
+//     fixture = TestBed.createComponent(WeatherIconComponent);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+//   it('should create', () => {
+//     expect(component).toBeTruthy();
+//   });
+// });
