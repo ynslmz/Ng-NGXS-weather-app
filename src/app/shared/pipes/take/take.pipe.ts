@@ -6,8 +6,7 @@ export class TakePipe implements PipeTransform {
 
   transform(value: any[], ...args: any[]): any[] {
     if (Array.isArray(value)) {
-      let take = value.length > Number(args[0]) ? Number(args[0]) : undefined;
-      return value.slice(0, take);
+      return value.slice(0, args[0]);
     }
     throw Error('Take pipe is only for arrays!')
   }

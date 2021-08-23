@@ -10,13 +10,13 @@ describe('TakePipe', () => {
   it('should transform length to 1', () => {
     const pipe = new TakePipe();
     let newArray = pipe.transform(array, [1]);
-    expect(newArray.length).toBeTruthy(1);
+    expect(newArray.length).toEqual(1);
   });
 
   it('should return all items when take comes bigger (9 -> 6)', () => {
     const pipe = new TakePipe();
     let newArray = pipe.transform(array, [9]);
-    expect(newArray.length).toBeTruthy(6);
+    expect(newArray.length).toEqual(6);
   });
 
 });
