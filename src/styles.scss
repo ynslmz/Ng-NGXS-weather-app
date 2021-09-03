@@ -1,0 +1,29 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import "~bootstrap/scss/bootstrap";
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+
+.metric.temp::after {
+  content: "\2103";
+}
+
+.standard.temp::after {
+  content: "\00BA\212A";
+}
+
+.imperial.temp::after {
+  content: "\2109";
+}
+
+.metric.wind::after {
+  content: "m/sec";
+}
+
+.standard.wind::after {
+  content: "m/sec";
+}
+
+.imperial.wind::after {
+  content: "mil/h";
+}

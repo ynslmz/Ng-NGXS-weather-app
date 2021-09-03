@@ -1,0 +1,3 @@
+<select class="form-select" (change)="change($event)">
+  <option *ngFor="let item of unitList" [selected]="item===default" [value]="item">{{item}}</option>
+</select>
